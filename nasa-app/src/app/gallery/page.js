@@ -1,25 +1,60 @@
 "use client";
+import Link from 'next/link';
 import './GalleryPage.css';
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-async function fetchNasaImages(page = 1, perPage= 3) {
-  const response = await fetch(`https://images-api.nasa.gov/search?q=galaxy&media_type=image&page=${page}&page_size=${perPage}`, {
+async function fetchNasaImages(page = 1, perPage= 3, query = 'galaxy') {
+  const response = await fetch(`https://images-api.nasa.gov/search?q=${query}&media_type=image&page=${page}&page_size=${perPage}`, {
   });
   const data = await response.json();
   return data;
 }
+
+const SearchBar = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSearch(searchTerm);
+  };
+
+  return (
+    <form className="searchBar" onSubmit={handleSubmit}>
+      <input
+        className="input"
+        type="text"
+        placeholder="Ex. Milky way, Earth ..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <input
+        type="image"
+        src="/icons8-search.svg"
+        alt="Submit"
+        style={{
+          width: "45px",
+          height: "45px",
+          padding: "1%",
+          border: "none",
+          cursor: "pointer",
+        }}
+      />
+    </form>
+  );
+};
 
 export default function GalleryPage() {
   const [images, setImages] = useState([]);
   const [currentPage, setCurrentPage]= useState(1);
   const [totalPages, setTotalPages] =useState(1);
   const totalRecords = 10;
+  const [query, setQuery] = useState('galaxy');
   const perPage = 3; 
 
   useEffect(() => {
     async function getImages() {
-      const data =await fetchNasaImages(currentPage, perPage);
+      const data =await fetchNasaImages(currentPage, perPage, query);
       const items= data.collection.items || [];
       const imageData =items.map(item => ({
         id: item.data[0].nasa_id,
@@ -31,7 +66,7 @@ export default function GalleryPage() {
       setTotalPages(Math.ceil(totalRecords/ perPage));
     }
     getImages();
-  }, [currentPage]);
+  }, [currentPage, query]);
 
   const handlePrevPage = ()=> {
     if (currentPage > 1) {
@@ -49,9 +84,14 @@ export default function GalleryPage() {
     setCurrentPage(page);
   };
 
-  const renderPagination=()=> {
+  const handleSearch = (searchTerm) => {
+    setQuery(searchTerm);
+    setCurrentPage(1); 
+  };
+  
+  const renderPagination = () => {
     const pages = [];
-    for (let i= 1; i<= totalPages; i++) {
+    for (let i = 1; i <= totalPages; i++) {
       pages.push(
         <li key={i} className={`page-item ${i === currentPage ? 'active' : ''}`}>
           <button className="page-link" onClick={() => handlePageClick(i)}>
@@ -63,34 +103,50 @@ export default function GalleryPage() {
 
     return (
       <ul className="pagination pgn justify-content-center">
-        <li className={`page-item ${currentPage === 1 ?'disabled' : ''}`}>
+        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
           <button className="page-link" onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
         </li>
         {pages}
-        <li className={`page-item ${currentPage ===totalPages ? 'disabled' :''}`}>
-          <button className="page-link" onClick={handleNextPage} disabled={currentPage ===totalPages}>Next</button>
+        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <button className="page-link" onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
         </li>
       </ul>
     );
   };
 
+  const SearchContainer = () => {
+    return (
+      <div className="homeContainer">
+        <h1 className="slogan"> 
+          “The beauty of the cosmos captured on canvas”
+        </h1>
+        <SearchBar onSearch={handleSearch} /> 
+      </div>
+    );
+  };
+
   return (
     <div className="container mt-5">
+      <SearchContainer /> 
       <div className="row">
         {images.map((image, index) => (
           <div key={index} className="col-md-4 mb-4">
-            <div className="card">
-              <img src={image.imageUrl}/>
-              <div className="card-body">
-                <h5 className="card-title">{image.name}</h5>
-                <p className="card-text">{image.description}</p>
-                <p className="card-text"><small className="text-muted">ID: {image.id}</small></p>
-              </div>
-            </div>
+         <Link href={`/carddetail/${image.id}`} passHref>
+              
+                <div className="card">
+                  <img src={image.imageUrl} className="card-img-top" alt={image.name} />
+                  <div className="card-body">
+                    <h5 className="card-title">{image.name}</h5>
+                    <p className="card-text">{image.description}</p>
+                    <p className="card-text"><small className="text-muted">ID: {image.id}</small></p>
+                  </div>
+                </div>
+            
+            </Link>
           </div>
         ))}
       </div>
-      <nav>
+      <nav aria-label="Page navigation">
         {renderPagination()}
       </nav>
     </div>
