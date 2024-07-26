@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "@/Styles/home.module.css"; // Adjust the path as needed
+import styles from "@/Styles/home.module.css"; 
 
 function mySubmit(e) {
   e.preventDefault();

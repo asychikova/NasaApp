@@ -50,11 +50,11 @@ export default function NavBar({ children }) {
             style={{ maxHeight: "200px" }}
             navbarScroll></Nav>
           <span className={styles.customPadding}>
-            <Nav.Link href="#action1">Gallery</Nav.Link>
+            <Nav.Link href="/gallery">Gallery</Nav.Link>
           </span>
           <span className={styles.customPadding}>
             {" "}
-            <Nav.Link href="#action2">Wishlist</Nav.Link>
+            <Nav.Link href="/wishlist">Wishlist</Nav.Link>
           </span>
           <span className="nav-item">
             <Link
