@@ -21,12 +21,12 @@ export default function Nav({ children }) {
                   Dropdown Button
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu className="tryail">
+                <Dropdown.Menu className="dropdown-bg">
                   <Dropdown.Item className="white-font" href="#/action-1">
                     Galaxies
                   </Dropdown.Item>
                   <Dropdown.Item className="white-font" href="#/action-2">
-                    nebula
+                    Nebula
                   </Dropdown.Item>
                   <Dropdown.Item className="white-font" href="#/action-3">
                     Black Holes
