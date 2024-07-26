@@ -1,3 +1,15 @@
+/*
+User enters "Milky Way" in search bar
+->
+searchTerm hold the user input "Milky Way"
+->
+handleSearch updates query with value of searchTerm "Milky Way" and reset pagination to first page
+->
+useEffect fetch images based on updated query "Milky Way" and current page
+->
+images and pagination updated and displayed 
+*/
+
 "use client";
 import Link from 'next/link';
 import './GalleryPage.css';
@@ -49,9 +61,12 @@ export default function GalleryPage() {
   const [currentPage, setCurrentPage]= useState(1);
   const [totalPages, setTotalPages] =useState(1);
   const totalRecords = 10;
-  const [query, setQuery] = useState('galaxy');
+  const [query, setQuery] = useState('galaxy');  //setQuery to update the search term
   const perPage = 3; 
 
+  //useEffect listen for changes to currentPage and query and triggers data fetch
+  //query is managed locally
+  //effect fetch data based on currentPage and query states
   useEffect(() => {
     async function getImages() {
       const data =await fetchNasaImages(currentPage, perPage, query);
@@ -84,6 +99,8 @@ export default function GalleryPage() {
     setCurrentPage(page);
   };
 
+  //update local query state with setQuery
+  //reset pagination to the first page
   const handleSearch = (searchTerm) => {
     setQuery(searchTerm);
     setCurrentPage(1); 
