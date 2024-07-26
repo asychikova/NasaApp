@@ -16,7 +16,7 @@ export default function NavBar({ children }) {
         <div className={styles.rightShift}>
           <Dropdown>
             <Dropdown.Toggle className="btn-dark">
-              Dropdown Button
+              Categories
             </Dropdown.Toggle>
             <Dropdown.Menu className={styles.dropdownBg}>
               <Dropdown.Item className={styles.whiteFont} href="#/action-1">
