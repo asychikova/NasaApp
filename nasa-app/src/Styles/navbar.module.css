@@ -1,0 +1,32 @@
+/* globals.css or specific CSS module */
+.dropdownBg {
+  background: #4b4a4a;
+  width: fit-content;
+}
+
+.customPadding {
+  padding: 0.8rem;
+}
+
+.rightShift {
+  padding-left: 28rem;
+}
+
+.whiteFont {
+  color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .navContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rightShift {
+    padding-left: inherit;
+  }
+
+  .nav-item {
+    margin-bottom: 10px;
+  }
+}

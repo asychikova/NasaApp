@@ -1,7 +1,5 @@
-.dropdown-bg {
-  background: #4b4a4a;
-}
-
-.white-font {
-  color: white;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
