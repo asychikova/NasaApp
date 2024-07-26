@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Register() {
+export default function Home() {
   return (
     <div >
       <h1>Register</h1>
-      <p>Some text</p>
+      <p>Will be created after authenticate</p>
     </div>
   );
 }

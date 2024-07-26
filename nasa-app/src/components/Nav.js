@@ -10,7 +10,7 @@ export default function Nav({ children }) {
   return (
     <nav className="navbar navbar-expand navbar-light bg-light">
       <div className="container">
-        <Link className="navbar-brand" href="/home">
+        <Link className="navbar-brand" href="/gallery">
           Cosmic Canvas
         </Link>
         <div className="navbar" id="navbarNav">
@@ -18,7 +18,7 @@ export default function Nav({ children }) {
             <li className="nav-item">
               <Dropdown>
                 <Dropdown.Toggle className="btn-dark">
-                  Dropdown Button
+                  Categories
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className="dropdown-bg">
