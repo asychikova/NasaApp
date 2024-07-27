@@ -12,12 +12,12 @@ export default function NavBar({ children }) {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/gallery" className="fw-bold">Cosmic Canvas</Navbar.Brand>
+        <Navbar.Brand href="/gallery" className="fw-bold">
+          Cosmic Canvas
+        </Navbar.Brand>
         <div className={styles.rightShift}>
           <Dropdown>
-            <Dropdown.Toggle className="btn-dark">
-              Categories
-            </Dropdown.Toggle>
+            <Dropdown.Toggle className="btn-dark">Categories</Dropdown.Toggle>
             <Dropdown.Menu className={styles.dropdownBg}>
               <Dropdown.Item className={styles.whiteFont} href="#/action-1">
                 Galaxies
@@ -63,7 +63,8 @@ export default function NavBar({ children }) {
           <span className="nav-item">
             <Link
               className="w-100 btn btn-outline-dark me-2"
-              href="/auth/login">
+              href="/auth/login"
+              style={{ whiteSpace: "nowrap" }}>
               Sign In
             </Link>
           </span>
