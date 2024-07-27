@@ -14,5 +14,43 @@
     color: rgb(242, 242, 242);
   }
   
- 
+  .homeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .slogan {
+    font-style: italic;
+    font-weight: bold;
+    padding: 2rem;
+    font-size: 30px;
+  }
+  
+  .input:focus {
+    border: none;
+    outline: none;
+  }
+  
+  .input {
+    border: none;
+    font-size: 1rem;
+  }
+  
+  .searchBar {
+    display: flex;
+    justify-content: space-between;
+    width: 40vw;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border: 1.2px solid black;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5%;
+  }
+
   
