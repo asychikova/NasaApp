@@ -63,7 +63,7 @@ export default function GalleryPage() {
   const [images, setImages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const totalRecords = 10;
+  const totalRecords = 30;
 
   const [query, setQuery] = useState("galaxy"); //setQuery to update the search term
   const perPage = 3;
