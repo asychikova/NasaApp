@@ -12,7 +12,7 @@ export default function NavBar({ children }) {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/gallery" className="fw-bold">
+        <Navbar.Brand href="/" className="fw-bold">
           Cosmic Canvas
         </Navbar.Brand>
         <div className={styles.rightShift}>
@@ -50,7 +50,7 @@ export default function NavBar({ children }) {
             style={{ maxHeight: "200px" }}
             navbarScroll></Nav>
           <span className={styles.customPadding}>
-            <Nav.Link href="/gallery">Gallery</Nav.Link>
+            <Nav.Link href="/">Gallery</Nav.Link>
           </span>
           <span className={styles.customPadding}>
             {" "}
