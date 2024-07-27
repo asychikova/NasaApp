@@ -24,7 +24,7 @@
 .searchBar {
   display: flex;
   justify-content: space-between;
-  width: 70vw;
+  width: 65vw;
   padding: 1rem;
   border: 1px solid black;
   border-radius: 50px;
