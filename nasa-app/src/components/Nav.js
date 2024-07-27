@@ -12,7 +12,7 @@ export default function NavBar({ children }) {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/gallery">Cosmic Canvas</Navbar.Brand>
+        <Navbar.Brand href="/gallery" className="fw-bold">Cosmic Canvas</Navbar.Brand>
         <div className={styles.rightShift}>
           <Dropdown>
             <Dropdown.Toggle className="btn-dark">
@@ -55,6 +55,10 @@ export default function NavBar({ children }) {
           <span className={styles.customPadding}>
             {" "}
             <Nav.Link href="/wishlist">Wishlist</Nav.Link>
+          </span>
+          <span className={styles.customPadding}>
+            {" "}
+            <Nav.Link href="/feedback">Feedback</Nav.Link>
           </span>
           <span className="nav-item">
             <Link
