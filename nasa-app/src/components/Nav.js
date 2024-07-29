@@ -60,7 +60,7 @@ export default function NavBar() {
             style={{ maxHeight: "200px" }}
             navbarScroll></Nav>
           <span className={styles.customPadding}>
-            <Nav.Link href="/gallery">Gallery</Nav.Link>
+            <Nav.Link href="/gallery/galaxy">Gallery</Nav.Link>
           </span>
           <span className={styles.customPadding}>
             {" "}

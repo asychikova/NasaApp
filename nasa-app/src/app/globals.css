@@ -12,3 +12,14 @@
   margin: 5px;
   border-radius: 0.375rem;
 }
+
+#customFlex {
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (max-width: 600px) {
+  #customFlex {
+    flex-direction: column;
+  }
+}
