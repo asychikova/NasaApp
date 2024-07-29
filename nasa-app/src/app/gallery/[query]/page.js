@@ -15,6 +15,7 @@ images and pagination updated and displayed
 import { useAtom } from "jotai";
 
 import Link from "next/link";
+import Image from "next/image";
 
 import "../../HomeGalleryPage.css";
 import { useEffect, useState } from "react";
@@ -160,11 +161,12 @@ export default function GalleryPage({ params }) {
           <div key={index} className="col-md-4 mb-4">
             <div className="card">
               <Link href={`/carddetail/${image.id}`} passHref>
-                <img
+                <Image
+                  width={500} // 500 pixels wide
+                  height={350}
                   src={image.imageUrl}
                   className="card-img-top"
                   alt={image.name}
-                  style={{ height: "350px" }}
                 />
               </Link>
               <div className="card-body">
