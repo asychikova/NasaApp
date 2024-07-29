@@ -20,13 +20,12 @@ import Image from "next/image";
 import "../../HomeGalleryPage.css";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { fetchNasaImages } from "@/fetch functions/fetchNasaImages";
+import { fetchNasaImages } from "@/products";
 import {
   handlePrevPage,
   handleNextPage,
   handlePageClick,
 } from "@/helper/pagination";
-import { categorieFinder } from "@/categories";
 import SearchBar from "@/components/SearchBar";
 import { searchTermAtom, currentPageAtom } from "@/global state/atom";
 
@@ -52,26 +51,8 @@ export default function GalleryPage({ params }) {
   useEffect(() => {
     async function getImages() {
       const data = await fetchNasaImages(currentPage, perPage, query);
-      const items = data.collection.items || [];
-
-      const imageData = items.map((item) => {
-        let description = item.data[0].description_508
-          ? item.data[0].description_508
-          : item.data[0].description;
-
-        let categories = categorieFinder(description);
-        let discounted = categories.length >= 2 ? true : false;
-        return {
-          id: item.data[0].nasa_id,
-          name: item.data[0].title,
-          description: description,
-          imageUrl: item.links ? item.links[0].href : "",
-          categories: categories,
-          discounted: discounted,
-        };
-      });
-
-      setImages(imageData);
+      // By getting the products from src/products.js
+      setImages(data);
       setTotalPages(Math.ceil(totalRecords / perPage));
     }
     getImages();
