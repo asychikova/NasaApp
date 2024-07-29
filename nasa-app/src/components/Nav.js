@@ -8,7 +8,7 @@ import Navbar from "react-bootstrap/Navbar";
 
 import styles from "@/Styles/navbar.module.css";
 
-export default function NavBar({ children }) {
+export default function NavBar() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -19,25 +19,35 @@ export default function NavBar({ children }) {
           <Dropdown>
             <Dropdown.Toggle className="btn-dark">Categories</Dropdown.Toggle>
             <Dropdown.Menu className={styles.dropdownBg}>
-              <Dropdown.Item className={styles.whiteFont} href="#/action-1">
+              <Dropdown.Item
+                className={styles.whiteFont}
+                href="/gallery/galaxy">
                 Galaxies
               </Dropdown.Item>
-              <Dropdown.Item className={styles.whiteFont} href="#/action-2">
+              <Dropdown.Item
+                className={styles.whiteFont}
+                href="/gallery/nebula">
                 Nebula
               </Dropdown.Item>
-              <Dropdown.Item className={styles.whiteFont} href="#/action-3">
+              <Dropdown.Item
+                className={styles.whiteFont}
+                href="/gallery/black hole">
                 Black Holes
               </Dropdown.Item>
-              <Dropdown.Item className={styles.whiteFont} href="#/action-2">
+              <Dropdown.Item
+                className={styles.whiteFont}
+                href="/gallery/planet">
                 Planets
               </Dropdown.Item>
-              <Dropdown.Item className={styles.whiteFont} href="#/action-2">
-                Space Crafts
+              <Dropdown.Item
+                className={styles.whiteFont}
+                href="/gallery/satellite">
+                Satellites
               </Dropdown.Item>
-              <Dropdown.Item className={styles.whiteFont} href="#/action-2">
+              <Dropdown.Item className={styles.whiteFont} href="/gallery/earth">
                 Earth
               </Dropdown.Item>
-              <Dropdown.Item className={styles.whiteFont} href="#/action-2">
+              <Dropdown.Item className={styles.whiteFont} href="/gallery/sun">
                 Sun
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -50,7 +60,7 @@ export default function NavBar({ children }) {
             style={{ maxHeight: "200px" }}
             navbarScroll></Nav>
           <span className={styles.customPadding}>
-            <Nav.Link href="/">Gallery</Nav.Link>
+            <Nav.Link href="/gallery">Gallery</Nav.Link>
           </span>
           <span className={styles.customPadding}>
             {" "}
