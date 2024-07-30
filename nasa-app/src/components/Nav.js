@@ -64,7 +64,7 @@ export default function NavBar() {
           </span>
           <span className={styles.customPadding}>
             {" "}
-            <Nav.Link href="/wishlist">Wishlist</Nav.Link>
+            <Nav.Link href="/cart">Cart</Nav.Link>
           </span>
           <span className={styles.customPadding}>
             {" "}

@@ -36,7 +36,6 @@ export default function GalleryPage({ params }) {
   const totalRecords = 30;
 
   const [query, setQuery] = useAtom(searchTermAtom); //setQuery to update the search term
-
   const perPage = 3;
 
   if (params) {
