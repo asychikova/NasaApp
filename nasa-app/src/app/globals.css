@@ -22,4 +22,9 @@
   #customFlex {
     flex-direction: column;
   }
+
+  .mediaImage {
+    width: 95vw;
+    height: 50%;
+  }
 }

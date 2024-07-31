@@ -51,11 +51,11 @@ export default function CardDetailPage({ params }) {
   return (
     <div style={{ padding: "10px" }}>
       <div className="card" id="customFlex">
-      <Image
+        <Image
           width={750} // 500 pixels wide
           height={550}
           src={card.imageUrl}
-          className=""
+          className="mediaImage"
           alt={card.title || "Image"}
           style={{ borderRadius: "5px" }}
         />
