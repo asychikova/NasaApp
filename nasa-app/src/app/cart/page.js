@@ -7,6 +7,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Image from "next/image";
 export default function Cart() {
   const [cart, setCart] = useState([]);
   console.log("in cart", cart);
