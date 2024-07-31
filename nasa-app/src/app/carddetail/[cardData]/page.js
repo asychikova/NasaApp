@@ -16,7 +16,7 @@ import { useState } from "react";
 export default function CardDetailPage({ params }) {
   const parsedCard = JSON.parse(decodeURIComponent(params.cardData));
   const [card, setCard] = useState(parsedCard);
-  console.log(parsedCard);
+  // console.log(parsedCard);
   const [selectedCanvas, setSelectedCanvas] = useState("Canvas 18X24");
   const canvasPrices = {
     "Canvas 18X24": 80,
@@ -25,9 +25,12 @@ export default function CardDetailPage({ params }) {
     "Canvas 40X48": 200,
   };
 
+  let price = canvasPrices[selectedCanvas] || 0; //price for selected canvas
+  if (card.discounted) {
+    const discountPercent = card.categories.length;
+    price = price - price * discountPercent * 0.1;
+  }
   const handleAddToCart = (card) => {
-    const price = canvasPrices[selectedCanvas] || 0; //price for selected canvas
-    console.log(card);
     const item = {
       ...card,
       price: price,
@@ -106,7 +109,32 @@ export default function CardDetailPage({ params }) {
                 <label htmlFor={size} style={{ marginRight: "5px" }}>
                   {size}
                 </label>
-                <span style={{ color: "grey" }}>{canvasPrices[size]} CAD</span>
+                {selectedCanvas === size ? (
+                  <>
+                    {card.discounted ? (
+                      <>
+                        <span
+                          style={{
+                            color: "red",
+                            textDecoration: "line-through",
+                          }}>
+                          {canvasPrices[size]} CAD
+                        </span>
+                        <span style={{ color: "#198754", padding: "3px" }}>
+                          {price} CAD {card.categories.length * 10}% off!
+                        </span>
+                      </>
+                    ) : (
+                      <span style={{ color: "grey" }}>
+                        {canvasPrices[size]} CAD
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span style={{ color: "grey" }}>
+                    {canvasPrices[size]} CAD
+                  </span>
+                )}
               </div>
             ))}
           </div>

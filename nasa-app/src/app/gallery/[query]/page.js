@@ -174,7 +174,7 @@ export default function GalleryPage({ params }) {
                             margin: "10px",
                             color: "white",
                           }}>
-                          Discounted!
+                          Discounted {image.categories.length * 10}% off!
                         </button>
                       ) : (
                         ""
