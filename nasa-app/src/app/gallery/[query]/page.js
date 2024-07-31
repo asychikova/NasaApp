@@ -51,6 +51,8 @@ export default function GalleryPage({ params }) {
     async function getImages() {
       const data = await fetchNasaImages(currentPage, perPage, query);
       // By getting the products from src/products.js
+      console.log(data);
+
       setImages(data);
       setTotalPages(Math.ceil(totalRecords / perPage));
     }
@@ -137,62 +139,81 @@ export default function GalleryPage({ params }) {
     <div className="container mt-5">
       <SearchContainer />
       <div className="row">
-        {images.map((image, index) => (
-          <div key={index} className="col-md-4 mb-4">
-            <div className="card">
-              <Link href={`/carddetail/${image.id}`} passHref>
-                <Image
-                  width={500} // 500 pixels wide
-                  height={350}
-                  src={image.imageUrl}
-                  className="card-img-top"
-                  alt={image.name}
-                />
-              </Link>
-              <div className="card-body">
-                <Link href={`/carddetail/${image.id}`} passHref>
-                  <h5 className="card-title fs-5">
-                    {image.name}
-                    {image.discounted ? (
-                      <button
-                        type="button"
-                        class="btn btn-sm"
-                        style={{
-                          background: "orange",
-                          margin: "10px",
-                          color: "white",
-                        }}>
-                        Discounted!
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </h5>
+        {images.map((image, index) => {
+          console.log(encodeURIComponent(JSON.stringify(image)));
+          return (
+            <div key={index} className="col-md-4 mb-4">
+              <div className="card">
+                <Link
+                  href={`/carddetail/${encodeURIComponent(
+                    JSON.stringify(image)
+                  )}`}
+                  passHref>
+                  <Image
+                    width={500} // 500 pixels wide
+                    height={350}
+                    src={image.imageUrl}
+                    className="card-img-top"
+                    alt={image.name}
+                  />
                 </Link>
-                <p
-                  className="card-text"
-                  style={openCards[image.id] ? null : textToggleStyle}>
-                  {image.description}
-                </p>
+                <div className="card-body">
+                  <Link
+                    href={`/carddetail/${encodeURIComponent(
+                      JSON.stringify(image)
+                    )}`}
+                    passHref>
+                    <h5 className="card-title fs-5">
+                      {image.name}
+                      {image.discounted ? (
+                        <button
+                          type="button"
+                          class="btn btn-sm"
+                          style={{
+                            background: "orange",
+                            margin: "10px",
+                            color: "white",
+                          }}>
+                          Discounted!
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                    </h5>
+                  </Link>
+                  <p
+                    className="card-text"
+                    style={openCards[image.id] ? null : textToggleStyle}>
+                    {image.description}
+                  </p>
 
-                {image.description.length > 75 ? (
-                  <span
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => toggleSingleCard(image.id)}>
-                    {openCards[image.id] ? "Show Less" : "Show More"}
-                  </span>
-                ) : null}
+                  {image.description.length > 75 ? (
+                    <span
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => toggleSingleCard(image.id)}>
+                      {openCards[image.id] ? "Show Less" : "Show More"}
+                    </span>
+                  ) : null}
 
-                <p className="card-text">
-                  <small className="text-muted">ID: {image.id}</small>
-                </p>
-                {image.categories.map((item) => {
-                  return <p className="categoryTag">{item}</p>;
-                })}
+                  <p className="card-text">
+                    <small className="text-muted">ID: {image.id}</small>
+                  </p>
+                  {image.categories.map((item) => {
+                    return (
+                      <Link
+                        href={`/gallery/${item}`}
+                        passHref
+                        className="categoryTag"
+                        style={{ fontSize: "small", textDecoration: "none" }}>
+                        {item}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <nav aria-label="Page navigation">{renderPagination()}</nav>
     </div>

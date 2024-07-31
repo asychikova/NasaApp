@@ -1,4 +1,4 @@
-// This is where the product data loads initially
+// This is where the product data loads initially.
 import { categorieFinder } from "@/categories";
 
 export async function fetchNasaImages(page = 1, perPage = 3, query = "galaxy") {
@@ -29,6 +29,7 @@ export async function fetchNasaImages(page = 1, perPage = 3, query = "galaxy") {
         imageUrl: item.links ? item.links[0].href : "",
         categories: categories,
         discounted: discounted,
+        price: 0,
       };
     });
 
