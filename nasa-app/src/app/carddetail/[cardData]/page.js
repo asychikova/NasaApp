@@ -12,6 +12,7 @@ Managing State:
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function CardDetailPage({ params }) {
   const parsedCard = JSON.parse(decodeURIComponent(params.cardData));
@@ -50,7 +51,9 @@ export default function CardDetailPage({ params }) {
   return (
     <div className="container mt-5">
       <div className="card" id="customFlex">
-        <img
+      <Image
+          width={750} // 500 pixels wide
+          height={550}
           src={card.imageUrl}
           className="card-img-left"
           alt={card.title || "Image"}

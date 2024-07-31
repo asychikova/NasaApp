@@ -66,7 +66,9 @@ export default function Cart() {
                       JSON.stringify(item)
                     )}`}
                     passHref>
-                    <img
+                    <Image
+                      width={500} // 500 pixels wide
+                      height={350}
                       src={item.imageUrl}
                       alt={item.title}
                       className="card-img-top"
