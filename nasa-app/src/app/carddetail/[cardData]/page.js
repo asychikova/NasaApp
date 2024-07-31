@@ -49,16 +49,17 @@ export default function CardDetailPage({ params }) {
   };
 
   return (
-    <div className="container mt-5">
+    <div style={{ padding: "10px" }}>
       <div className="card" id="customFlex">
       <Image
           width={750} // 500 pixels wide
           height={550}
           src={card.imageUrl}
-          className="card-img-left"
+          className=""
           alt={card.title || "Image"}
+          style={{ borderRadius: "5px" }}
         />
-        <div className="card-body">
+        <div className="card-body" style={{ width: "100%" }}>
           <h5 className="card-title">
             {card.name}
             {card.discounted ? (
@@ -76,8 +77,9 @@ export default function CardDetailPage({ params }) {
               ""
             )}
           </h5>
-          <p className="card-text">{card.description_508}</p>
+
           <p className="card-text">{card.description}</p>
+
           <p className="card-text">
             Categories:{" "}
             {card.categories.map((item) => {
