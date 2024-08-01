@@ -39,6 +39,7 @@
 }
 
 .searchBar {
+  background: #fff;
   display: flex;
   justify-content: space-between;
   min-width: 40vw;

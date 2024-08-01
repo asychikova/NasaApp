@@ -6,7 +6,7 @@ import "./globals.css";
 export default function Root({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body style={{ background: "#D9D9D9" }}>
         <Nav />
         <main>{children}</main>
       </body>

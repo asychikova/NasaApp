@@ -1,14 +1,16 @@
 "use client";
 //  React Bootstrap's Dropdown component, relies on client-side JavaScript to function correctly.
+import styles from "../Styles/navbar.module.css";
+
 import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-
-import styles from "../Styles/navbar.module.css";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
+  const currentPath = usePathname();
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -79,9 +81,15 @@ export default function NavBar() {
             </Link>
           </span>
           <span className={`nav-item ${styles.customPadding}`}>
-            <Link className="w-100 btn btn-dark" href="/auth/register">
-              Register
-            </Link>
+            {currentPath == "/auth/register" ? (
+              <button type="button" className="w-100 btn btn-dark" disabled>
+                Register
+              </button>
+            ) : (
+              <Link className="w-100 btn btn-dark" href="/auth/register">
+                Register
+              </Link>
+            )}
           </span>
         </Navbar.Collapse>
       </Container>
