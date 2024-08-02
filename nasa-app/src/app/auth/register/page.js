@@ -5,11 +5,12 @@ import styles from "@/Styles/form.module.css";
 
 export default function Home() {
   const [formData, setFormData] = useState({
-    userName: "",
+    username: "",
     email: "",
     password: "",
   });
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,19 +18,25 @@ export default function Home() {
 
   async function handleRegister(e) {
     e.preventDefault();
-    setError(""); // Reset any previous errors
+    setError("");
+    setSuccess("");
+
     try {
       const resp = await fetch("http://localhost:3000/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(e),
+        body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
+      const result = await resp.json();
+      if (resp.ok) {
+        setSuccess(result.message);
+
         console.log("User registered successfully");
       } else {
+        setError(result.message);
         console.log("Error registering user");
       }
     } catch (error) {
@@ -48,12 +55,17 @@ export default function Home() {
             {error}
           </p>
         )}
+        {success && (
+          <p className="text-center mb-4" style={{ color: "green" }}>
+            {success}
+          </p>
+        )}
         <div className="d-flex flex-column align-items-center">
           <div className="mb-4" style={{ width: "100%" }}>
             <input
               type="text"
-              name="userName"
-              placeholder="Username"
+              name="username"
+              placeholder="username"
               value={formData.value}
               onChange={handleChange}
               className={`form-control ${styles.input}`}

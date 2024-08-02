@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 In Node.js, mixing import statements (ES Modules) and require statements (CommonJS) in different files can lead to inconsistencies and errors because Node.js treats files differently based on their module type. 
 */
 
+// In any proj, ensure consistent naming conventions between the schema and the route handler.
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -52,8 +53,10 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 };
 
 // Modal might alredy be created else use this modal, hence :-
-const Users =
+const User =
   mongoose.models.users || mongoose.model("nasa_app_users", userSchema);
 
 //using require to import modules, you should also use module.exports to export them.
-module.exports = Users;
+module.exports = User;
+
+// Smetimes after chaning the properties of your schema, delete your db and create it again in the atlas.
