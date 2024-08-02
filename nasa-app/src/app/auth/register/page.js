@@ -39,7 +39,7 @@ export default function Home() {
   }
   return (
     <div className="container mt-5">
-      <form onSubmit={handleRegister} className="w-50 mx-auto p-5 bg-white">
+      <form onSubmit={handleRegister} className="w-25 mx-auto p-5 bg-white">
         <h3 className="text-center mb-4">Create a new account</h3>
         {error && (
           <p className="text-center mb-4" style={{ color: "red" }}>
