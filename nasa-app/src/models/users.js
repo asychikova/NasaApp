@@ -1,11 +1,14 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+
+/*
+In Node.js, mixing import statements (ES Modules) and require statements (CommonJS) in different files can lead to inconsistencies and errors because Node.js treats files differently based on their module type. 
+*/
 
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
     trim: true,
   },
   email: {
@@ -52,4 +55,5 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 const Users =
   mongoose.models.users || mongoose.model("nasa_app_users", userSchema);
 
-export default Users;
+//using require to import modules, you should also use module.exports to export them.
+module.exports = Users;
