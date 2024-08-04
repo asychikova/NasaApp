@@ -22,13 +22,16 @@ export default function Home() {
     setSuccess("");
 
     try {
-      const resp = await fetch("http://localhost:3000/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const resp = await fetch(
+        "https://nasa-app-server-p2d3.onrender.com/user/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const result = await resp.json();
       if (resp.ok) {
