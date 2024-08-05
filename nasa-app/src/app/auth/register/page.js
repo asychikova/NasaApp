@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import styles from "@/Styles/form.module.css";
-import userLocationTime from "@/helper/generalHelpers";
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -12,22 +11,6 @@ export default function Home() {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [serverTime, setServerTime] = useState("");
-  const [currentTime, setCurrentTime] = useState("");
-
-  const prevStateRef = useRef();
-
-  useEffect(() => {
-    prevStateRef.current = serverTime;
-  }, [serverTime]);
-
-  const prevState = prevStateRef.current;
-
-  useEffect(() => {
-    if (serverTime && serverTime !== prevState) {
-      setCurrentTime(userLocationTime(serverTime));
-    }
-  }, [serverTime, prevState]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -57,8 +40,7 @@ export default function Home() {
 
         console.log("User registered successfully");
       } else {
-        setServerTime(result.MongoServerTime);
-        setError(result.message + " " + currentTime);
+        setError(result.message + userLocationTime(result.MongoServerTime));
         console.log("Error registering user");
       }
     } catch (error) {
