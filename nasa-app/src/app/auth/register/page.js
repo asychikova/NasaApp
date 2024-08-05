@@ -43,8 +43,8 @@ export default function Home() {
         console.log("Error registering user");
       }
     } catch (error) {
-      console.log("Error in user registration:", error);
-      setError("An unexpected error occurred. Please try again.");
+      console.log("Error in user registration:");
+      console.log(error);
     }
   }
   return (
