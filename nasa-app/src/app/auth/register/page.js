@@ -68,7 +68,7 @@ export default function Home() {
             <input
               type="text"
               name="username"
-              placeholder="username"
+              placeholder="Username"
               value={formData.value}
               onChange={handleChange}
               className={`form-control ${styles.input}`}
