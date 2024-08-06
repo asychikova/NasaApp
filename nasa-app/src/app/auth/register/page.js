@@ -2,6 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import styles from "@/Styles/form.module.css";
+import userLocationTime from "@/helper/generalHelpers";
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -37,10 +38,11 @@ export default function Home() {
       const result = await resp.json();
       if (resp.ok) {
         setSuccess(result.message);
-
         console.log("User registered successfully");
       } else {
-        setError(result.message + userLocationTime(result.MongoServerTime));
+        if (result.MongoServerTime) {
+          setError(result.message + userLocationTime(result.MongoServerTime));
+        }
         console.log("Error registering user");
       }
     } catch (error) {
