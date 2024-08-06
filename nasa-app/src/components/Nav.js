@@ -8,8 +8,15 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { usePathname } from "next/navigation";
+import { useAtom } from "jotai";
+import { userName } from "@/global state/atom";
+
+import handleLogout from "@/helper/logOut";
+import LogOut from "@/helper/logOut";
 
 export default function NavBar() {
+  const [theUserName, setUserName] = useAtom(userName);
+
   const currentPath = usePathname();
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -72,25 +79,38 @@ export default function NavBar() {
             {" "}
             <Nav.Link href="/feedback">Feedback</Nav.Link>
           </span>
-          <span className="nav-item">
-            <Link
-              className="w-100 btn btn-outline-dark me-2"
-              href="/auth/login"
-              style={{ whiteSpace: "nowrap" }}>
-              Sign In
-            </Link>
-          </span>
-          <span className={`nav-item ${styles.customPadding}`}>
-            {currentPath == "/auth/register" ? (
-              <button type="button" className="w-100 btn btn-dark" disabled>
-                Register
-              </button>
-            ) : (
-              <Link className="w-100 btn btn-dark" href="/auth/register">
-                Register
-              </Link>
-            )}
-          </span>
+          {theUserName ? (
+            <>
+              <span
+                className={styles.customPadding + " fs-5"}
+                style={{ whiteSpace: "nowrap" }}>
+                Hello, {theUserName}!
+              </span>
+              <LogOut />
+            </>
+          ) : (
+            <>
+              <span className="nav-item">
+                <Link
+                  className="w-100 btn btn-outline-dark me-2"
+                  href="/auth/login"
+                  style={{ whiteSpace: "nowrap" }}>
+                  Sign In
+                </Link>
+              </span>
+              <span className={`nav-item ${styles.customPadding}`}>
+                {currentPath == "/auth/register" ? (
+                  <button type="button" className="w-100 btn btn-dark" disabled>
+                    Register
+                  </button>
+                ) : (
+                  <Link className="w-100 btn btn-dark" href="/auth/register">
+                    Register
+                  </Link>
+                )}
+              </span>
+            </>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

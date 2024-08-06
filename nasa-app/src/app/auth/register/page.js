@@ -23,6 +23,7 @@ export default function Home() {
     setSuccess("");
 
     //"https://nasa-app-server-p2d3.onrender.com/user/register"
+    //http://localhost:3003/user/register
     try {
       const resp = await fetch(
         "https://nasa-app-server-p2d3.onrender.com/user/register",
@@ -42,12 +43,15 @@ export default function Home() {
       } else {
         if (result.MongoServerTime) {
           setError(result.message + userLocationTime(result.MongoServerTime));
+        } else {
+          setError(result.message);
         }
+        console.log(result);
         console.log("Error registering user");
       }
     } catch (error) {
-      console.log("Error in user registration:");
       console.log(error);
+      console.log("Error in user registration:");
     }
   }
   return (
