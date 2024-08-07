@@ -65,7 +65,7 @@ export default function CardDetailPage({ params }) {
             {card.discounted ? (
               <button
                 type="button"
-                class="btn btn-sm"
+                className="btn btn-sm"
                 style={{
                   background: "orange",
                   margin: "10px",

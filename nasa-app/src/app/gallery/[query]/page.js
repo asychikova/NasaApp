@@ -140,7 +140,6 @@ export default function GalleryPage({ params }) {
       <SearchContainer />
       <div className="row">
         {images.map((image, index) => {
-          console.log(encodeURIComponent(JSON.stringify(image)));
           return (
             <div key={index} className="col-md-4 mb-4">
               <div className="card">
@@ -157,7 +156,7 @@ export default function GalleryPage({ params }) {
                     alt={image.name}
                   />
                 </Link>
-                <div className="card-body">
+                <div key={index} className="card-body">
                   <Link
                     href={`/carddetail/${encodeURIComponent(
                       JSON.stringify(image)
@@ -168,7 +167,7 @@ export default function GalleryPage({ params }) {
                       {image.discounted ? (
                         <button
                           type="button"
-                          class="btn btn-sm"
+                          className="btn btn-sm"
                           style={{
                             background: "orange",
                             margin: "10px",
