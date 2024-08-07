@@ -26,7 +26,8 @@ export default function Home() {
     //http://localhost:3003/user/register
     try {
       const resp = await fetch(
-        "https://nasa-app-server-p2d3.onrender.com/user/register",
+      //"http://localhost:3004/user/register",
+      "https://nasa-app-server-p2d3.onrender.com/user/register",
         {
           method: "POST",
           headers: {

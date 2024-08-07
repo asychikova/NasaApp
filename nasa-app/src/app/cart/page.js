@@ -4,41 +4,60 @@
     items are removed, cart state and localStorage are both updated to reflect the changes.
 */
 "use client";
+
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 export default function Cart() {
   const [cart, setCart] = useState([]);
-  //console.log("in cart", cart);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCart(savedCart);
-  }, []);
+    async function checkAuthentication() {
+      try {
+      //const response = await fetch("http://localhost:3004/cart", {
+      const response = await fetch("https://nasa-app-server-p2d3.onrender.com/cart", {
+          method: "GET",
+          credentials: "include",
+        });
 
+        if (response.ok) {
+          setIsAuthenticated(true);
+          //fetch cart from local storage
+          const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+          setCart(savedCart);
+        } else {
+          throw new Error("Not authenticated");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setIsAuthenticated(false);
+        router.push("/auth/login");
+      }
+    }
+    checkAuthentication();
+  }, [router]);
+  
   const handleRemoveItem = (index) => {
     // current cart get from local storage
     const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    //new cart array without the item at given index
-    const updatedCart = [];
-    for (let i = 0; i < currentCart.length; i++) {
-      if (i !== index) {
-        updatedCart.push(currentCart[i]);
-      }
-    }
+    // new cart array without the item at given index
+    const updatedCart = currentCart.filter((_, i) => i !== index);
     // local storage update with new cart array
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    //update cart state with the new cart array
+    // update cart state with the new cart array
     setCart(updatedCart);
   };
 
   const calculateTotalPrice = () => {
-    let total = 0; //total to 0
+    let total = 0; // total to 0
     // go through each item in the cart
     for (let i = 0; i < cart.length; i++) {
-      const item = cart[i]; //current item
+      const item = cart[i]; // current item
       // + item's price to total if price exists, otherwise add 0
       if (item.price) {
         total += item.price;
