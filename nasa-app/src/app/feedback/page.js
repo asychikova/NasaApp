@@ -16,9 +16,9 @@ export default function Feedback() {
     event.preventDefault();
 
     //send the email using EmailJS to anna.dmsv@gmail.com
-    const serviceID = 'service_0fo1uuh';
-    const templateID = 'template_wej18st';
-    const userID = 'EgQkYhWp-tQW000Pg';
+    const serviceID = 'service_e19a1l6'; //'service_0fo1uuh';
+    const templateID = 'template_y4m95og'; //'template_wej18st';
+    const userID = 'bBFqYygqQXT3dN8AK'; //'EgQkYhWp-tQW000Pg';
 
     const templateParams = {
       from_name: fromName,
