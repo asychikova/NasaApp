@@ -5,7 +5,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
-const stripePromise = loadStripe("pk_test_51PlvuoP1z0H5hsGyJVslfZyduzET8ck1ru9PcOuf61uLUaOIH53kSxj6Lxvul2V0cxVnzieZzbYLvBla4X4W6uEs00EtOQeCiW");
+const stripePromise = loadStripe("pk_test_51PlypHP3r7cZXzMpSDpvbcW5IjRlp06U0CL2J7nXnGO5MW1KZubfqAe1ZDbdKe81hHM5TnCr6QEJDBGLtwVsqMNJ00RveYs9SM");
 export default function CheckoutForm() {
   const [paymentDetails, setPaymentDetails] = useState({
     cardNumber: "",
