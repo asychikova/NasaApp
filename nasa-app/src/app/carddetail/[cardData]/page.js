@@ -51,33 +51,29 @@ export default function CardDetailPage({ params }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(item),
+          body: JSON.stringify({ cardItem: item }),
         }
       );
 
+      const result = await response.json();
+      if (response.status === 400) {
+        alert(result.message);
+      }
+
       if (!response.ok) {
-        throw new Error("Not authenticated");
+        if (response.status === 400) {
+          alert(result.message);
+        } else {
+          throw new Error(result.message || "An error occurred");
+        }
       } else {
-        alert(`Added ${card.title} - ${selectedCanvas} to cart`);
+        alert(`Added ${item.name} to cart`); // Assuming `item` has a `name` field
       }
     } catch (error) {
       console.error("Error:", error);
       router.push("/auth/login");
     }
   }
-
-  // const handleAddToCart = (card) => {
-  //   const item = {
-  //     ...card,
-  //     price: price,
-  //   };
-
-  //   const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-  //   existingCart.push(item);
-  //   localStorage.setItem("cart", JSON.stringify(existingCart));
-
-  //   alert(`Added ${card.title} - ${selectedCanvas} to cart`);
-  // };
 
   const handleBuyNow = () => {
     alert(`Purchasing ${card.title} - ${selectedCanvas}`);

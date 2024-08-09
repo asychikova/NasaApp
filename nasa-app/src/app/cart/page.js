@@ -13,11 +13,12 @@ import { useRouter } from "next/navigation";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
+  const [rerender, setRerender] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    async function checkAuthentication() {
+    async function checkAuthenticationAndDisplay() {
       try {
         //const response = await fetch("http://localhost:3004/cart", {
         const response = await fetch(
@@ -28,10 +29,15 @@ export default function Cart() {
           }
         );
 
+        const result = await response.json();
+        //console.log("In cart ", result);
+
         if (response.ok) {
           setIsAuthenticated(true);
           //fetch cart from local storage
-          const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+          //const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+          const savedCart = result.items;
+
           setCart(savedCart);
         } else {
           throw new Error("Not authenticated");
@@ -42,19 +48,36 @@ export default function Cart() {
         router.push("/auth/login");
       }
     }
-    checkAuthentication();
-  }, [router]);
+    checkAuthenticationAndDisplay();
+  }, [rerender]);
 
-  const handleRemoveItem = (index) => {
-    // current cart get from local storage
-    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
-    // new cart array without the item at given index
-    const updatedCart = currentCart.filter((_, i) => i !== index);
-    // local storage update with new cart array
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    // update cart state with the new cart array
-    setCart(updatedCart);
-  };
+  async function handleRemoveItem(id) {
+    try {
+      const response = await fetch(
+        "https://nasa-app-server-p2d3.onrender.com/removeCartItem",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ItemToBeRemovedId: id }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to remove item");
+      }
+
+      const result = await response.json();
+      setRerender("rerender"); //reload curr page.
+
+      console.log("Item removed successfully:", result);
+    } catch (error) {
+      alert("Error removing cart item.");
+      console.log("Error removing cart item, ", error);
+    }
+  }
 
   const calculateTotalPrice = () => {
     let total = 0; // total to 0
@@ -107,10 +130,11 @@ export default function Cart() {
                       <h5 className="card-title fs-5">{item.name}</h5>
                     </Link>
                     <p className="card-text">{item.canvasSize}</p>
-                    <p className="card-text">Price: {item.price} CAD</p>
+                    <p className="card-text">Price: {item.price}CAD</p>
+
                     <button
                       className="btn btn-danger"
-                      onClick={() => handleRemoveItem(index)}>
+                      onClick={async () => await handleRemoveItem(item._id)}>
                       Remove
                     </button>
                   </div>
