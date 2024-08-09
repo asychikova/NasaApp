@@ -92,12 +92,18 @@ export default function Cart() {
     return total;
   };
 
+  const handleCheckout = () => {
+    router.push("/checkout"); // Navigate to the checkout page
+  };
+
   return (
     <div className="container mt-5">
       <h1>Cart</h1>
       <div className="mt-4 mb-3">
         <h4>Total Price: ${calculateTotalPrice().toFixed(2)}</h4>
+        <Link href={`/checkout?totalPrice=${calculateTotalPrice()}`}>
         <button className="btn btn-primary">Continue Checkout</button>
+      </Link>
       </div>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>

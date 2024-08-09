@@ -76,9 +76,17 @@ export default function CardDetailPage({ params }) {
   }
 
   const handleBuyNow = () => {
-    alert(`Purchasing ${card.title} - ${selectedCanvas}`);
+    //send to checkout
+    const queryString = new URLSearchParams({
+      totalPrice: price,
+      canvasSize: selectedCanvas,
+      cardData: JSON.stringify(card),
+    }).toString();
+  
+    //to checkout page with data
+    router.push(`/checkout?${queryString}`);
   };
-
+  
   return (
     <div style={{ padding: "10px" }}>
       <div className="card" id="customFlex">
