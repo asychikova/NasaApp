@@ -19,11 +19,14 @@ export default function Cart() {
   useEffect(() => {
     async function checkAuthentication() {
       try {
-      //const response = await fetch("http://localhost:3004/cart", {
-      const response = await fetch("https://nasa-app-server-p2d3.onrender.com/cart", {
-          method: "GET",
-          credentials: "include",
-        });
+        //const response = await fetch("http://localhost:3004/cart", {
+        const response = await fetch(
+          "https://nasa-app-server-p2d3.onrender.com/cart",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
         if (response.ok) {
           setIsAuthenticated(true);
@@ -41,7 +44,7 @@ export default function Cart() {
     }
     checkAuthentication();
   }, [router]);
-  
+
   const handleRemoveItem = (index) => {
     // current cart get from local storage
     const currentCart = JSON.parse(localStorage.getItem("cart")) || [];

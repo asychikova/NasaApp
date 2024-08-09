@@ -13,8 +13,11 @@ Managing State:
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function CardDetailPage({ params }) {
+  const router = useRouter();
+
   const parsedCard = JSON.parse(decodeURIComponent(params.cardData));
   const [card, setCard] = useState(parsedCard);
   // console.log(parsedCard);
@@ -31,18 +34,50 @@ export default function CardDetailPage({ params }) {
     const discountPercent = card.categories.length;
     price = price - price * discountPercent * 0.1;
   }
-  const handleAddToCart = (card) => {
+
+  async function handleAddToCart(card) {
     const item = {
       ...card,
       price: price,
     };
 
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    existingCart.push(item);
-    localStorage.setItem("cart", JSON.stringify(existingCart));
+    try {
+      //const response = await fetch("http://localhost:3004/cart", {
+      const response = await fetch(
+        "https://nasa-app-server-p2d3.onrender.com/cart",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(item),
+        }
+      );
 
-    alert(`Added ${card.title} - ${selectedCanvas} to cart`);
-  };
+      if (!response.ok) {
+        throw new Error("Not authenticated");
+      } else {
+        alert(`Added ${card.title} - ${selectedCanvas} to cart`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      router.push("/auth/login");
+    }
+  }
+
+  // const handleAddToCart = (card) => {
+  //   const item = {
+  //     ...card,
+  //     price: price,
+  //   };
+
+  //   const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+  //   existingCart.push(item);
+  //   localStorage.setItem("cart", JSON.stringify(existingCart));
+
+  //   alert(`Added ${card.title} - ${selectedCanvas} to cart`);
+  // };
 
   const handleBuyNow = () => {
     alert(`Purchasing ${card.title} - ${selectedCanvas}`);
@@ -145,7 +180,7 @@ export default function CardDetailPage({ params }) {
           </div>
           <div style={{ marginTop: "20px" }}>
             <button
-              onClick={() => handleAddToCart(card)}
+              onClick={async () => await handleAddToCart(card)}
               className="btn btn-secondary me-2">
               Add to Cart
             </button>

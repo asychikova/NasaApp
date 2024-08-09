@@ -51,7 +51,7 @@ export default function GalleryPage({ params }) {
     async function getImages() {
       const data = await fetchNasaImages(currentPage, perPage, query);
       // By getting the products from src/products.js
-      console.log(data);
+      //console.log(data);
 
       setImages(data);
       setTotalPages(Math.ceil(totalRecords / perPage));
