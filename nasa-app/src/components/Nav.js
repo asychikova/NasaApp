@@ -82,7 +82,7 @@ export default function NavBar() {
           {theUserName ? (
             <>
               <span
-                className={styles.customPadding + " fs-5"}
+                className={styles.customPadding + " fs-7"}
                 style={{ whiteSpace: "nowrap" }}>
                 Hello, {theUserName}!
               </span>
