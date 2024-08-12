@@ -20,7 +20,7 @@ export default function LogOut() {
       );
 
       if (resp.ok) {
-        localStorage.removeItem("username");
+        localStorage.clear();
         setTheUserName(null);
         router.push("/"); // Redirect to login page
       } else {
