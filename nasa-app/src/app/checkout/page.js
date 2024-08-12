@@ -5,8 +5,10 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
-const stripePromise = loadStripe("pk_test_51PlypHP3r7cZXzMpSDpvbcW5IjRlp06U0CL2J7nXnGO5MW1KZubfqAe1ZDbdKe81hHM5TnCr6QEJDBGLtwVsqMNJ00RveYs9SM");
-export default function CheckoutForm() {
+const stripePromise = loadStripe(
+  "pk_test_51PlypHP3r7cZXzMpSDpvbcW5IjRlp06U0CL2J7nXnGO5MW1KZubfqAe1ZDbdKe81hHM5TnCr6QEJDBGLtwVsqMNJ00RveYs9SM"
+);
+function CheckoutFormContent() {
   const [paymentDetails, setPaymentDetails] = useState({
     cardNumber: "",
     expiryDate: "",
@@ -18,7 +20,7 @@ export default function CheckoutForm() {
 
   useEffect(() => {
     // totalPrice from query params
-    const price = searchParams.get('totalPrice');
+    const price = searchParams.get("totalPrice");
     if (price) {
       setTotalPrice(parseFloat(price));
     }
@@ -70,12 +72,16 @@ export default function CheckoutForm() {
   return (
     <div className="container mt-5">
       <h1>Checkout</h1>
-      <form onSubmit={handleSubmit} className="w-50 mx-auto bg-white p-4 rounded">
-      <div className="mb-4">
-        <h4>Total Price: ${totalPrice.toFixed(2)}</h4>
-      </div>
+      <form
+        onSubmit={handleSubmit}
+        className="w-50 mx-auto bg-white p-4 rounded">
+        <div className="mb-4">
+          <h4>Total Price: ${totalPrice.toFixed(2)}</h4>
+        </div>
         <div className="mb-3">
-          <label htmlFor="cardNumber" className="form-label">Card Number</label>
+          <label htmlFor="cardNumber" className="form-label">
+            Card Number
+          </label>
           <input
             type="text"
             className="form-control"
@@ -88,7 +94,9 @@ export default function CheckoutForm() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="expiryDate" className="form-label">Expiry Date</label>
+          <label htmlFor="expiryDate" className="form-label">
+            Expiry Date
+          </label>
           <input
             type="text"
             className="form-control"
@@ -101,7 +109,9 @@ export default function CheckoutForm() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="cvv" className="form-label">CVV</label>
+          <label htmlFor="cvv" className="form-label">
+            CVV
+          </label>
           <input
             type="text"
             className="form-control"
@@ -114,9 +124,19 @@ export default function CheckoutForm() {
           />
         </div>
         <div className="d-grid gap-2">
-          <button type="submit" className="btn btn-primary">Pay Now</button>
+          <button type="submit" className="btn btn-primary">
+            Pay Now
+          </button>
         </div>
       </form>
     </div>
+  );
+}
+
+export default function CheckoutForm() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutFormContent />
+    </Suspense>
   );
 }
