@@ -82,11 +82,11 @@ export default function CardDetailPage({ params }) {
       canvasSize: selectedCanvas,
       cardData: JSON.stringify(card),
     }).toString();
-  
+
     //to checkout page with data
     router.push(`/checkout?${queryString}`);
   };
-  
+
   return (
     <div style={{ padding: "10px" }}>
       <div className="card" id="customFlex">
@@ -135,7 +135,9 @@ export default function CardDetailPage({ params }) {
           </p>
 
           <p className="card-text">
-            <small className="text-muted">ID: {card.id}</small>
+            <small className="text-muted">
+              ID: {card.id ? card.id : card.productId}
+            </small>
           </p>
           <div>
             <h5>Select Canvas Size</h5>

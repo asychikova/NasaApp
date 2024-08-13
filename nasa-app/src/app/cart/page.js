@@ -37,7 +37,6 @@ export default function Cart() {
           //fetch cart from local storage
           //const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
           const savedCart = result.items;
-
           setCart(savedCart);
         } else {
           throw new Error("Not authenticated");
@@ -102,8 +101,8 @@ export default function Cart() {
       <div className="mt-4 mb-3">
         <h4>Total Price: ${calculateTotalPrice().toFixed(2)}</h4>
         <Link href={`/checkout?totalPrice=${calculateTotalPrice()}`}>
-        <button className="btn btn-primary">Continue Checkout</button>
-      </Link>
+          <button className="btn btn-primary">Continue Checkout</button>
+        </Link>
       </div>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
