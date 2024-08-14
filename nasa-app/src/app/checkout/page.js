@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 const stripePromise = loadStripe(
   "pk_test_51PlypHP3r7cZXzMpSDpvbcW5IjRlp06U0CL2J7nXnGO5MW1KZubfqAe1ZDbdKe81hHM5TnCr6QEJDBGLtwVsqMNJ00RveYs9SM"
 );
+
 function CheckoutFormContent() {
   const [paymentDetails, setPaymentDetails] = useState({
     cardNumber: "",
@@ -15,6 +16,7 @@ function CheckoutFormContent() {
     cvv: "",
   });
   const [totalPrice, setTotalPrice] = useState(0);
+  const [error, setError] = useState(null);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -38,40 +40,45 @@ function CheckoutFormContent() {
 
     const stripe = await stripePromise;
 
-    // payment intent from server
-    const response = await fetch("/api/payment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ amount: totalPrice * 100 }), //amount in cents
-    });
-    const { clientSecret } = await response.json();
-
-    // Stripe.js to handle the payment
-    const { error } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: {
-          number: paymentDetails.cardNumber,
-          exp_month: parseInt(paymentDetails.expiryDate.split("/")[0], 10),
-          exp_year: parseInt(paymentDetails.expiryDate.split("/")[1], 10),
-          cvc: paymentDetails.cvv,
+    try {
+      // payment intent from server
+      const response = await fetch("/api/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      },
-    });
+        body: JSON.stringify({ amount: totalPrice * 100 }), //amount in cents
+      });
+      const { clientSecret } = await response.json();
 
-    if (error) {
-      console.error("Payment error:", error);
-      //error
-    } else {
-      //successful
-      router.push("/confirmation");
+      // Stripe.js to handle the payment
+      const { error } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: {
+            number: paymentDetails.cardNumber,
+            exp_month: parseInt(paymentDetails.expiryDate.split("/")[0], 10),
+            exp_year: parseInt(paymentDetails.expiryDate.split("/")[1], 10),
+            cvc: paymentDetails.cvv,
+          },
+        },
+      });
+
+      if (error) {
+        setError("Payment failed: " + error.message);
+        console.error("Payment error:", error);
+      } else {
+        router.push("/confirmation");
+      }
+    } catch (error) {
+      setError("Payment processing error: " + error.message);
+      console.error("Payment processing error:", error);
     }
   };
 
   return (
     <div className="container mt-5">
       <h1>Checkout</h1>
+      {error && <div className="alert alert-danger">{error}</div>}
       <form
         onSubmit={handleSubmit}
         className="w-50 mx-auto bg-white p-4 rounded">
@@ -134,9 +141,5 @@ function CheckoutFormContent() {
 }
 
 export default function CheckoutForm() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CheckoutFormContent />
-    </Suspense>
-  );
+  return <CheckoutFormContent />;
 }
