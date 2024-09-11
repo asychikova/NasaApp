@@ -42,7 +42,7 @@ function CheckoutFormContent() {
 
     try {
       // payment intent from server
-      const response = await fetch("/api/payment", {
+      const response = await fetch("/api/payment", { //PaymentIntent using srtipe API, server should generate the clientSecret
         method: "POST",
         headers: {
           "Content-Type": "application/json",
